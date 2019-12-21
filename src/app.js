@@ -37,7 +37,7 @@ app.use(session({
     httpOnly : true,                  // 仅允许服务端修改
     maxAge   : 24 * 60 * 60 * 1000    // ms cookie过期时间
   },
-  ttl   : 24 * 60 * 60 * 1000,        // redis key 过期时间
+  // ttl   : 24 * 60 * 60 * 1000,        // redis key 过期时间 默认 cookie过期时间
   store : redisStore({
     all : `${REDIS_CONF.host}:${REDIS_CONF.port}`
   })
