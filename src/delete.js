@@ -15,5 +15,5 @@ const { User, Blog } = require('./model')
       id: 2
     }
   })
-  console.log("delUserRes", delUserRes)
+  console.log('delUserRes', delUserRes)
 })()

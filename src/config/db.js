@@ -1,5 +1,5 @@
 /**
- * @description 存储配置
+ * @description 数据库存储配置
  * @author malujie
  */
 
@@ -11,14 +11,29 @@ let REDIS_CONF = {
   host: '127.0.0.1'
 }
 
+let MYSQL_CONF = {
+  host: 'localhost',
+  user: 'root',
+  password: '123456',
+  port: '3306',
+  database: 'weibo'
+}
 // 线上环境的配置
 // if(isProd) {
 //   REDIS_CONF = {
 //     port: 1111,
 //     host: '11111111'
 //   }
+//   MYSQL_CONF = {
+//     host: 'localhost',
+//     user: 'root',
+//     password: '123456',
+//     port: '3306',
+//     database: 'weibo'
+//   }
 // }
 
 module.exports = {
-  REDIS_CONF
+  REDIS_CONF,
+  MYSQL_CONF
 }
