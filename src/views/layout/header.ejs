@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/bootstarp.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- 有微博列表，以及右侧面板 -->
+  <% if(locals.list) { %>
+  <link rel="stylesheet" href="../../public/css/list.css">
+  <link rel="stylesheet" href="../../public/css/right.css">
+  <% } %>
+
+  <!-- 窄模式，适用于登录和注册 -->
+  <% if(locals.isNarrow) { %>
+  <style>
+    body {
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+  </style>
+  <% } %>
+
+  <!-- 有导航 -->
+  <% if(locals.isNav) { %>
+    <!-- <link rel="stylesheet" href="/css/fontawesome.min.css"> -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <% } %>
+
+  <!-- jquery -->
+  <script src="/js/jquery.min.js"></script>
+  <!-- ajax请求 -->
+  <script src="/js/my-ajax.js"></script>
+
+  <!-- 发布微博 -->
+  <% if(locals.isInputBlog) { %>
+  <link rel="stylesheet" href="/css/jquery.atwho.css">
+  <script src="/js/jquery-caret.js"></script>
+  <script src="/js/jquery.atwho.js"></script>
+  <% } %>
+</head>
+
+<body>
+  <!-- 显示导航栏 -->
+  <% if(locals.isNav) { %>
+  <nav class="navbar navbar-default navbar-static-top" style="background-color: cornsilk;">
+    <a class="navbar-brand" href="/">微博</a>
+    <ul class="navbar-nav mr-auto" style="flex-direction: row;">
+      <li class="nav-item" style="padding-left: 20px;">
+        <a href="/" class="nav-link"><i class="fa fa-home"></i>首页</a>
+      </li>
+      <li class="nav-item" style="padding-left: 20px;">
+        <a href="/profile" class="nav-link"><i class="fa fa-user"></i>我的空间</a>
+      </li>
+      <li class="nav-item" style="padding-left: 20px;">
+        <a href="/square" class="nav-link"><i class="fa fa-group"></i>广场</a>
+      </li>
+      <li class="nav-item" style="padding-left: 20px;">
+        <a href="/setting" class="nav-link"><i class="fa fa-cog"></i>设置</a>
+      </li>
+    </ul>
+  </nav>
+  <% } %>
