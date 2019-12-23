@@ -6,9 +6,9 @@
 // 线上环境判断
 const { isProd, isTest } = require('../utils/env')
 const Sequelize = require('sequelize')
-const MYSQL_CONF = require('../config/db')
+const { MYSQL_CONF } = require('../config/db')
 
-const { host, database, user, password } = MYSQL_CONF
+const { host, user, password, database } = MYSQL_CONF
 const conf = {
   host,
   dialect: 'mysql'

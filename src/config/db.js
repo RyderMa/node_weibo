@@ -14,9 +14,9 @@ let REDIS_CONF = {
 let MYSQL_CONF = {
   host: 'localhost',
   user: 'root',
-  password: '123456',
+  password: '1234',
   port: '3306',
-  database: 'weibo'
+  database: 'weibo_node'
 }
 // 线上环境的配置
 // if(isProd) {
