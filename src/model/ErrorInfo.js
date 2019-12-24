@@ -43,5 +43,10 @@ module.exports = {
   changeInfoFail: {
     errno: 10008,
     message: '修改个人信息失败'
+  },
+  // json schema 校验失败
+  jsonSchemaFail: {
+    errno: 10009,
+    message: '数据格式校验失败'
   }
 }

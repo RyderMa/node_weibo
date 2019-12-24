@@ -33,6 +33,7 @@ async function register({ userName, password, gender }) {
     // 用户名已存在
     return new FailModel(registerUserNameExist)
   }
+
   // 执行注册
   try {
     await createUser({
