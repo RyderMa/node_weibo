@@ -8,6 +8,7 @@ const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const { REDIS_CONF } = require('./config/db')
+const { SESSION_SCERET_KEY } = require('./config/sceretsKeys')
 const { isProd } = require('./utils/env')
 
 const index = require('./routes/index')
@@ -17,7 +18,7 @@ const errorViewRouter = require('./routes/view/error')
 
 // error handler
 let onerrorConf = {}
-if(isProd) {
+if (isProd) {
   onerrorConf = {
     redirect: '/error'
   }
@@ -26,7 +27,7 @@ onerror(app, onerrorConf)
 
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
@@ -37,18 +38,18 @@ app.use(views(__dirname + '/views', {
 }))
 
 // session 配置
-app.keys = ['UIDsjd_d23j']
+app.keys = [SESSION_SCERET_KEY]
 app.use(session({
-  key    : 'weibo.sid',               // cookie name 默认 'koa.sid'
-  prefix : 'weibo:sess:',             // redis key 前缀 默认 'koa:sess:'
-  cookie : {
-    path     : '/',                   // 整个网页路由都可以获取到
-    httpOnly : true,                  // 仅允许服务端修改
-    maxAge   : 24 * 60 * 60 * 1000    // ms cookie过期时间
+  key: 'weibo.sid',               // cookie name 默认 'koa.sid'
+  prefix: 'weibo:sess:',             // redis key 前缀 默认 'koa:sess:'
+  cookie: {
+    path: '/',                   // 整个网页路由都可以获取到
+    httpOnly: true,                  // 仅允许服务端修改
+    maxAge: 24 * 60 * 60 * 1000    // ms cookie过期时间
   },
   // ttl   : 24 * 60 * 60 * 1000,        // redis key 过期时间 默认 cookie过期时间
-  store : redisStore({
-    all : `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  store: redisStore({
+    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
   })
 }))
 
