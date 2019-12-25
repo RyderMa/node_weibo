@@ -26,22 +26,25 @@
     var $inputUserName = $('#input-username')
     var $inputPassword = $('#input-password')
 
-    $('#btn-submit').click(function(e) {
+    $('#btn-submit').click(function (e) {
       // 阻止表单默认提交
       e.preventDefault()
       const userName = $inputUserName.val()
       const password = $inputPassword.val()
-      ajax.post('/api/user/login', function(err, data) {
+      ajax.post('/api/user/login', {
+        userName,
+        password
+      }, function (err, data) {
         console.log('err数据', err)
         console.log('data数据', data)
-        if(err) {
+        if (err) {
           alert(err)
           return
         }
         // http://localhost:3000/login?url=xxx
         // 登录成功跳转到指定页或首页
-        var redirectUrl = $.query.get('url') || '/'
-        location.href = redirectUrl
+        // var redirectUrl = $.query.get('url') || '/'
+        // location.href = redirectUrl
       })
     })
   })

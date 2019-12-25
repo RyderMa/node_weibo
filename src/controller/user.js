@@ -6,7 +6,7 @@
 const doCrypto = require('../utils/cryp')
 const { getUserInfo, createUser } = require('../services/user')
 const { SuccessModel, FailModel } = require('../model/ResModel')
-const { registerUserNameNotExist, registerUserNameExist } = require('../model/ErrorInfo')
+const { registerUserNameNotExist, registerUserNameExist, loginFail } = require('../model/ErrorInfo')
 
 /**
  * @description 用户名是否存在
@@ -48,7 +48,26 @@ async function register({ userName, password, gender }) {
   }
 }
 
+/**
+ * 
+ * @param {Object} ctx koa2 ctx
+ * @param {string} userName 
+ * @param {password} password 
+ */
+async function login({ ctx, userName, password }) {
+  const userInfo = await getUserInfo(userName, doCrypto(password))
+  if (!userInfo) {
+    return new FailModel(loginFail)
+  }
+  // 登录成功 ctx.session.userInfo 存储用户信息
+  if(ctx.session.userInfo == null) {
+    ctx.session.userInfo = userInfo
+  }
+  return new SuccessModel()
+}
+
 module.exports = {
   isExist,
-  register
+  register,
+  login
 }

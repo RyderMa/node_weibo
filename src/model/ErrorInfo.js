@@ -19,10 +19,10 @@ module.exports = {
     errno: 10003,
     message: '用户名不存在'
   },
-  // 登陆失败
+  // 登录失败
   loginFail: {
     errno: 10004,
-    message: '登录失败'
+    message: '用户名或密码错误'
   },
   // 未登录
   loginCheckFail: {

@@ -4,13 +4,20 @@
  */
 
 const router = require('koa-router')()
-const { isExist, register } = require('../../controller/user')
+const { isExist, register, login } = require('../../controller/user')
 // 用户信息校验规则
 const userValidate = require('../../validator/user')
 // 校验规则中间件
-const {genValidator} = require('../../middlewares/validator')
+const { genValidator } = require('../../middlewares/validator')
 
 router.prefix('/api/user')  // 路由前缀
+
+// 用户名是否存在
+router.post('/isExist', async (ctx, next) => {
+  const { userName } = ctx.request.body
+  // 调用controller
+  ctx.body = await isExist(userName)
+})
 
 // 注册api
 router.post('/register', genValidator(userValidate), async (ctx, next) => {
@@ -19,11 +26,11 @@ router.post('/register', genValidator(userValidate), async (ctx, next) => {
   ctx.body = await register({ userName, password, gender })
 })
 
-// 用户名是否存在
-router.post('/isExist', async (ctx, next) => {
-  const { userName } = ctx.request.body
-  // 调用controller
-  ctx.body = await isExist(userName)
+// 登录api
+router.post('/login', async (ctx, next) => {
+  const { userName, password } = ctx.request.body
+  // 调用登录controller
+  ctx.body = await login({ ctx, userName, password })
 })
 
 module.exports = router

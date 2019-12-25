@@ -29,7 +29,7 @@ async function getUserInfo(userName, password) {
   }
 
   // 数据格式化
-  const formatRes = formatUser(res.dataValues)
+  const formatRes = formatUser(result.dataValues)
   return formatRes
 }
 
