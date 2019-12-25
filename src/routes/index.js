@@ -1,9 +1,11 @@
 const router = require('koa-router')()
+// 登录验证中间件 页面层
+const { loginCheck, loginRedirect } = require('../middlewares/loginChecks')
 
-router.get('/', async (ctx, next) => {
+router.get('/', loginRedirect, async (ctx, next) => {
   await ctx.render('index', {
     title: 'Hello Koa 2!',
-    isMe : false,
+    isMe: false,
     blogList: [
       {
         id: 1,
@@ -21,12 +23,12 @@ router.get('/', async (ctx, next) => {
   })
 })
 
-router.get('/json', async (ctx, next) => {
+router.get('/json', loginCheck, async (ctx, next) => {
   const session = ctx.session
-  if(session.viewNum == null) {
+  if (session.viewNum == null) {
     session.viewNum = 0
   }
-  session.viewNum ++
+  session.viewNum++
   ctx.body = {
     title: 'koa2 json'
     // viewNum: session.viewNum
