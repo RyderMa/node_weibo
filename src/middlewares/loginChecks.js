@@ -29,6 +29,7 @@ async function loginRedirect(ctx, next) {
   if (ctx.session && ctx.session.userInfo) {
     // 已登录
     await next()
+    return
   }
   // 未登录跳转到登录页
   const curUrl = ctx.url

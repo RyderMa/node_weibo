@@ -1,0 +1,62 @@
+<!-- 引入头部组件 -->
+<%- include('layout/header', { title: '微博-设置', isNav: true }) %>
+
+<div class="container" style="margin-top: 20px;">
+  <div class="row">
+    <!-- 左侧 -->
+    <div class="col-8">
+      <h5 style="margin-bottom: 10px;">基本信息</h5>
+      <form>
+        <div class="form-group row">
+          <label for="input-nickName" class="col-sm-3 col-form-label">昵称</label>
+          <div class="col-sm-9">
+            <input type="text" value="<%= nickName%>" class="form-control" id="input-nickName" placeholder="请输入昵称">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-city" class="col-sm-3 col-form-label">城市</label>
+          <div class="col-sm-9">
+            <input type="text" value="<%= city%>" class="form-control" id="input-city" placeholder="请输入城市">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-city" class="col-sm-3 col-form-label">头像</label>
+          <div class="col-sm-9">
+            <img src="<%= picture%>" style="width: 100px; margin-bottom: 10px;" alt="">
+            <input type="file" class="form-control-file" accept="image/*" id="input-city">
+          </div>
+        </div>
+        <center><button type="submit" class="btn btn-primary" id="btn-submit-info">保存</button></center>
+      </form>
+
+      <hr>
+      <h5 style="margin-bottom: 10px;">修改密码</h5>
+      <form>
+        <div class="form-group row">
+          <label for="input-cur-password" class="col-sm-3 col-form-label">当前密码</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="input-cur-password" placeholder="请输入当前密码">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-new-password" class="col-sm-3 col-form-label">新密码</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="input-new-password" placeholder="请输入新密码">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-cur-password-repeat" class="col-sm-3 col-form-label">再次输入新密码</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="input-cur-password-repeat" placeholder="请再次输入新密码">
+          </div>
+        </div>
+        <center><button type="submit" class="btn btn-primary" id="btn-change-password">确定</button></center>
+      </form>
+      <hr>
+      <center><button type="button" class="btn btn-danger" id="btn-logout" style="margin-bottom: 50px;">退出登录</button></center>
+    </div>
+  </div>
+</div>
+
+<!-- 引入底部组件 -->
+<%- include('layout/footer') %>
