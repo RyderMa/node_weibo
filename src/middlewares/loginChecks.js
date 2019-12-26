@@ -12,11 +12,11 @@ const { loginCheckFail } = require('../model/ErrorInfo')
  * @param {function} next 
  */
 async function loginCheck(ctx, next) {
-  console.log(ctx)
   if (ctx.session && ctx.session.userInfo) {
     // 已登录
     await next()
-  }
+    return
+  } 
   ctx.body = new FailModel(loginCheckFail)
 }
 

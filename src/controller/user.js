@@ -4,9 +4,9 @@
  */
 
 const doCrypto = require('../utils/cryp')
-const { getUserInfo, createUser } = require('../services/user')
+const { getUserInfo, createUser, deleteUser } = require('../services/user')
 const { SuccessModel, FailModel } = require('../model/ResModel')
-const { registerUserNameNotExist, registerUserNameExist, loginFail } = require('../model/ErrorInfo')
+const { registerUserNameNotExist, registerUserNameExist, loginFail, deleteUserFail } = require('../model/ErrorInfo')
 
 /**
  * @description 用户名是否存在
@@ -60,14 +60,30 @@ async function login({ ctx, userName, password }) {
     return new FailModel(loginFail)
   }
   // 登录成功 ctx.session.userInfo 存储用户信息
-  if(ctx.session.userInfo == null) {
+  if (ctx.session.userInfo == null) {
     ctx.session.userInfo = userInfo
   }
   return new SuccessModel()
 }
 
+/**
+ * 删除当前用户
+ * @param {string} userName 
+ */
+async function deleteCurUser(userName) {
+  // service
+  const result = await deleteUser(userName)
+  if (result) {
+    // 删除成功
+    return new SuccessModel()
+  }
+  // 失败
+  return new FailModel(deleteUserFail)
+}
+
 module.exports = {
   isExist,
   register,
-  login
+  login,
+  deleteCurUser
 }

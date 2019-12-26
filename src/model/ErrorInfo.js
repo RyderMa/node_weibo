@@ -48,5 +48,10 @@ module.exports = {
   jsonSchemaFail: {
     errno: 10009,
     message: '数据格式校验失败'
+  },
+  // 删除用户失败
+  deleteUserFail: {
+    errno: 10010,
+    message: '删除用户失败'
   }
 }
