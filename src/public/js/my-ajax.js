@@ -36,9 +36,9 @@
       processData: false,
       data: formData,
       success: function(res) {
-        if(res.error !== 0) {
+        if(res.errno != 0) {
           // 错误
-          callback(res.message)
+          callback(res)
           return
         }
         // 正确
@@ -64,7 +64,7 @@
       contentType: 'application/json;charset=UTF-8',
       data: params ? JSON.stringify(params) : '',
       success: function(res) {
-        if(res.error !== 0) {
+        if(res.errno !== 0) {
           callback(res.message)
           return
         }

@@ -22,8 +22,8 @@
         <div class="form-group row">
           <label for="input-city" class="col-sm-3 col-form-label">头像</label>
           <div class="col-sm-9">
-            <img src="<%= picture%>" style="width: 100px; margin-bottom: 10px;" alt="">
-            <input type="file" class="form-control-file" accept="image/*" id="input-city">
+            <img id="img-picture" src="<%= picture%>" style="width: 100px; margin-bottom: 10px;" alt="">
+            <input id="file-picture" type="file" class="form-control-file" accept="image/*">
           </div>
         </div>
         <center><button type="submit" class="btn btn-primary" id="btn-submit-info">保存</button></center>
@@ -53,10 +53,27 @@
         <center><button type="submit" class="btn btn-primary" id="btn-change-password">确定</button></center>
       </form>
       <hr>
-      <center><button type="button" class="btn btn-danger" id="btn-logout" style="margin-bottom: 50px;">退出登录</button></center>
+      <center><button type="button" class="btn btn-danger" id="btn-logout" style="margin-bottom: 50px;">退出登录</button>
+      </center>
     </div>
   </div>
 </div>
 
+<script>
+  // 上传图片
+  var $imgPicture = $('#img-picture')
+  var $filePicture = $('#file-picture')
+  $filePicture.change((e) => {
+    var file = $filePicture[0].files[0]
+    ajax.upload('/api/utils/upload', file, function (err, data) {
+      if (err) {
+        alert(err)
+        return
+      }
+      // 上传成功
+      $imgPicture.attr('src', data.url)
+    })
+  })
+</script>
 <!-- 引入底部组件 -->
 <%- include('layout/footer') %>
