@@ -56,7 +56,7 @@ async function register({ userName, password, gender }) {
 }
 
 /**
- * 
+ * 登录
  * @param {Object} ctx koa2 ctx
  * @param {string} userName 
  * @param {password} password 
@@ -70,6 +70,16 @@ async function login({ ctx, userName, password }) {
   if (ctx.session.userInfo == null) {
     ctx.session.userInfo = userInfo
   }
+  return new SuccessModel()
+}
+
+/**
+ * 退出登录
+ * @param {Object} ctx
+ */
+async function logout(ctx) {
+  // 删除当前 session
+  delete ctx.session.userInfo
   return new SuccessModel()
 }
 
@@ -149,6 +159,7 @@ module.exports = {
   isExist,
   register,
   login,
+  logout,
   changeInfo,
   deleteCurUser,
   changePassword

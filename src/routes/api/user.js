@@ -5,7 +5,7 @@
 
 const router = require('koa-router')()
 const { isTest } = require('../../utils/env')
-const { isExist, register, login, changeInfo, deleteCurUser, changePassword } = require('../../controller/user')
+const { isExist, register, login, logout, changeInfo, deleteCurUser, changePassword } = require('../../controller/user')
 // 用户信息校验规则
 const userValidate = require('../../validator/user')
 // 登录验证中间件
@@ -22,21 +22,26 @@ router.post('/isExist', async (ctx, next) => {
   ctx.body = await isExist(userName)
 })
 
-// 注册api
+// 注册
 router.post('/register', genValidator(userValidate), async (ctx, next) => {
   const { userName, password, gender } = ctx.request.body
   // 调用controller
   ctx.body = await register({ userName, password, gender })
 })
 
-// 登录api
+// 登录
 router.post('/login', async (ctx, next) => {
   const { userName, password } = ctx.request.body
   // 调用登录controller
   ctx.body = await login({ ctx, userName, password })
 })
 
-// 删除
+// 退出登录
+router.post('/logout', loginCheck, async(ctx, next) => {
+  ctx.body = await logout(ctx)
+})
+
+// 删除用户
 router.post('/delete', loginCheck, async (ctx, next) => {
   if (isTest) {
     // 测试环境下，测试账号登录删除自己

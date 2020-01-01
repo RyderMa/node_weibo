@@ -137,6 +137,15 @@
       }
     )
   })
+
+  // 退出登录
+  $('#btn-logout').click(function() {
+    ajax.post('/api/user/logout', function(err, data) {
+      alert('已退出登录')
+      var redirectUrl = $.query.get('url') || '/'
+      location.href = redirectUrl
+    })
+  })
 </script>
 <!-- 引入底部组件 -->
 <%- include('layout/footer') %>
