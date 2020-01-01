@@ -4,9 +4,9 @@
  */
 
 const doCrypto = require('../utils/cryp')
-const { getUserInfo, createUser, deleteUser } = require('../services/user')
+const { getUserInfo, createUser, deleteUser, updateUser } = require('../services/user')
 const { SuccessModel, FailModel } = require('../model/ResModel')
-const { registerUserNameNotExist, registerUserNameExist, loginFail, deleteUserFail } = require('../model/ErrorInfo')
+const { registerUserNameNotExist, registerUserNameExist, loginFail, deleteUserFail, changeInfoFail } = require('../model/ErrorInfo')
 
 /**
  * @description 用户名是否存在
@@ -67,6 +67,38 @@ async function login({ ctx, userName, password }) {
 }
 
 /**
+ * 修改个人信息
+ * @param {Object} ctx
+ * @param {string} nickName nickName
+ * @param {string} city city
+ * @param {string} picture picture
+ */
+async function changeInfo(ctx, { nickName, city, picture }) {
+  const { userName } = ctx.session.userInfo
+  if (!nickName) {
+    nickName = userName
+  }
+  // service
+  const result = await updateUser(
+    {
+      newNickName: nickName,
+      newCity: city,
+      newPicture: picture
+    },
+    { userName }
+  )
+  console.log('修改结果', result)
+
+  if (result) {
+    // 成功更新 session 数据
+    Object.assign(ctx.session.userInfo, { nickName, city, picture })
+    return new SuccessModel()
+  }
+  // 失败
+  return new FailModel(changeInfoFail)
+}
+
+/**
  * 删除当前用户
  * @param {string} userName 
  */
@@ -85,5 +117,6 @@ module.exports = {
   isExist,
   register,
   login,
+  changeInfo,
   deleteCurUser
 }

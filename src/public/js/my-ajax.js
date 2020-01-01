@@ -25,6 +25,24 @@
     ajaxFn('post', url, params, callback)
   }
 
+  // patch
+  window.ajax.patch = function (url, params, callback) {
+    if (typeof params === 'function') {
+      callback = params
+      params = {}
+    }
+    ajaxFn('patch', url, params, callback)
+  }
+
+  // delete
+  window.ajax.delete = function (url, params, callback) {
+    if (typeof params === 'function') {
+      callback = params
+      params = {}
+    }
+    ajaxFn('delete', url, params, callback)
+  }
+
   // 图片上传
   window.ajax.upload = function (url, file, callback) {
     var formData = new FormData()

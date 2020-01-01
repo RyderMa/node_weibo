@@ -63,6 +63,8 @@
   // 上传图片
   var $imgPicture = $('#img-picture')
   var $filePicture = $('#file-picture')
+
+  // 头像上传
   $filePicture.change((e) => {
     var file = $filePicture[0].files[0]
     ajax.upload('/api/utils/upload', file, function (err, data) {
@@ -73,6 +75,34 @@
       // 上传成功
       $imgPicture.attr('src', data.url)
     })
+  })
+
+  // 更新用户信息
+  $inputNickName = $('#input-nickName')
+  $inputCity = $('#input-city')
+
+  $('#btn-submit-info').click(function (e) {
+    console.log('保存')
+    e.preventDefault()
+    const nickName = $inputNickName.val()
+    const city = $inputCity.val()
+    const picture = $imgPicture.attr('src')
+    console.log('昵称', nickName)
+    console.log('城市', city)
+    console.log('头像', picture)
+    ajax.patch('/api/user/changeInfo', {
+        nickName,
+        city,
+        picture
+      },
+      function(err, data) {
+        if(err) {
+          alert(err)
+          return
+        }
+        alert('修改成功')
+      }
+    )
   })
 </script>
 <!-- 引入底部组件 -->

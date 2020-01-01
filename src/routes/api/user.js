@@ -5,7 +5,7 @@
 
 const router = require('koa-router')()
 const { isTest } = require('../../utils/env')
-const { isExist, register, login, deleteCurUser } = require('../../controller/user')
+const { isExist, register, login, changeInfo, deleteCurUser } = require('../../controller/user')
 // 用户信息校验规则
 const userValidate = require('../../validator/user')
 // 登录验证中间件
@@ -44,5 +44,13 @@ router.post('/delete', loginCheck, async (ctx, next) => {
     // 调用controller
     ctx.body = await deleteCurUser(userName)
   }
+})
+
+// 修改个人信息 使用 patch 符合 restful API 规范
+router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx, next) => {
+  console.log('请求体', ctx.request.body)
+  const { nickName, city, picture } = ctx.request.body
+  // controller
+  ctx.body = await changeInfo(ctx, { nickName, city, picture })
 })
 module.exports = router
