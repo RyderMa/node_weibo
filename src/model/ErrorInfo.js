@@ -32,7 +32,7 @@ module.exports = {
   // 修改密码失败
   changePasswordFail: {
     errno: 10006,
-    message: '修改密码失败'
+    message: '修改密码失败，请重试'
   },
   // 上传文件过大
   uploadFilesSizeFail: {

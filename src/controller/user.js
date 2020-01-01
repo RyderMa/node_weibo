@@ -6,7 +6,14 @@
 const doCrypto = require('../utils/cryp')
 const { getUserInfo, createUser, deleteUser, updateUser } = require('../services/user')
 const { SuccessModel, FailModel } = require('../model/ResModel')
-const { registerUserNameNotExist, registerUserNameExist, loginFail, deleteUserFail, changeInfoFail } = require('../model/ErrorInfo')
+const {
+  registerUserNameNotExist,
+  registerUserNameExist,
+  loginFail,
+  deleteUserFail,
+  changeInfoFail,
+  changePasswordFail
+} = require('../model/ErrorInfo')
 
 /**
  * @description 用户名是否存在
@@ -99,6 +106,31 @@ async function changeInfo(ctx, { nickName, city, picture }) {
 }
 
 /**
+ * 修改密码
+ * @param {string} userName 用户名
+ * @param {string} password 原密码
+ * @param {string} newPassword 新密码
+ */
+async function changePassword({ userName, password, newPassword }) {
+  const result = await updateUser(
+    {
+      newPassword: doCrypto(newPassword)
+    }, // 密码加密
+    {
+      userName,
+      password: doCrypto(password)
+    }
+  )
+
+  if (result) {
+    // 成功
+    return new SuccessModel()
+  }
+  // 失败
+  return new FailModel(changePasswordFail)
+}
+
+/**
  * 删除当前用户
  * @param {string} userName 
  */
@@ -118,5 +150,6 @@ module.exports = {
   register,
   login,
   changeInfo,
-  deleteCurUser
+  deleteCurUser,
+  changePassword
 }

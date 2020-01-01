@@ -45,9 +45,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="input-cur-password-repeat" class="col-sm-3 col-form-label">再次输入新密码</label>
+          <label for="input-new-password-repeat" class="col-sm-3 col-form-label">再次输入新密码</label>
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="input-cur-password-repeat" placeholder="请再次输入新密码">
+            <input type="password" class="form-control" id="input-new-password-repeat" placeholder="请再次输入新密码">
           </div>
         </div>
         <center><button type="submit" class="btn btn-primary" id="btn-change-password">确定</button></center>
@@ -77,30 +77,63 @@
     })
   })
 
-  // 更新用户信息
   $inputNickName = $('#input-nickName')
   $inputCity = $('#input-city')
+  $inputCurPassword = $('#input-cur-password')
+  $inputNewPassword = $('#input-new-password')
+  $inputNewPasswordRepeat = $('#input-new-password-repeat')
 
+  // 更新用户信息
   $('#btn-submit-info').click(function (e) {
-    console.log('保存')
     e.preventDefault()
     const nickName = $inputNickName.val()
     const city = $inputCity.val()
     const picture = $imgPicture.attr('src')
-    console.log('昵称', nickName)
-    console.log('城市', city)
-    console.log('头像', picture)
+
     ajax.patch('/api/user/changeInfo', {
-        nickName,
-        city,
-        picture
+      nickName,
+      city,
+      picture
+    },
+      function (err, data) {
+        if (err) {
+          alert(err)
+          return
+        }
+        alert('修改成功')
+      }
+    )
+  })
+
+  // 修改密码
+  $('#btn-change-password').click(function(e) {
+    e.preventDefault()
+    const curPassword = $inputCurPassword.val()
+    const newPassword = $inputNewPassword.val()
+    const newPasswordRepeat = $inputNewPasswordRepeat.val()
+
+    if(curPassword == newPassword) {
+      alert('新密码与原密码不能相同')
+      return
+    }
+    if(newPassword != newPasswordRepeat) {
+      alert('两次密码输入不一致')
+      return
+    }
+
+    ajax.patch('/api/user/changePassword', {
+        password: curPassword,
+        newPassword
       },
       function(err, data) {
         if(err) {
           alert(err)
           return
         }
-        alert('修改成功')
+        alert('密码修改成功')
+        $inputCurPassword.val('')
+        $inputNewPassword.val('')
+        $inputNewPasswordRepeat.val('')
       }
     )
   })
