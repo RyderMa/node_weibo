@@ -3,7 +3,7 @@
  * @author malujie
  */
 
-const server = require('./server')
+const server = require('../server')
 
 // 用户信息
 const userName = `u_${Date.now()}`
