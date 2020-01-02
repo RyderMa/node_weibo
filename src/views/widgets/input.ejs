@@ -44,7 +44,8 @@
   })
 
   // 发布微博
-  $('#btn-submit').click(function () {
+  $('#btn-submit').click(function (e) {
+    e.preventDefault();
     var content = $textContent.val().trim()
     var imgUrl = $inputImgUrl.val() || ''
     // 验证
@@ -56,20 +57,19 @@
     ajax.post('/api/blog/create', {
       content,
       image: imgUrl
-    },
-      function (err, data) {
-        if (err) {
-          alert(err)
-          return
-        }
-        // 成功
-        $filePicture.val('')
-        $spanImgName.text('')
-        $textContent.val('')
-        $inputImgUrl.val('')
-        // 刷新页面
-        location.href = location.pathname
+    }, function (err, data) {
+      if (err) {
+        alert(err)
+        return
       }
+      // 成功
+      $filePicture.val('')
+      $spanImgName.text('')
+      $textContent.val('')
+      $inputImgUrl.val('')
+      // 刷新页面
+      location.href = location.pathname
+    }
     )
   })
 </script>

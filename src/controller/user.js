@@ -4,8 +4,8 @@
  */
 
 const doCrypto = require('../utils/cryp')
-const { getUserInfo, createUser, deleteUser, updateUser } = require('../services/user')
 const { SuccessModel, FailModel } = require('../model/ResModel')
+const { getUserInfo, createUser, deleteUser, updateUser } = require('../services/user')
 const {
   registerUserNameNotExist,
   registerUserNameExist,
