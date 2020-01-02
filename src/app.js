@@ -14,10 +14,10 @@ const { REDIS_CONF } = require('./config/db')
 const { SESSION_SCERET_KEY } = require('./config/sceretsKeys')
 const { isProd } = require('./utils/env')
 
-const index = require('./routes/index')
 const utilsApiRouter = require('./routes/api/utils')
 const userViewRouter = require('./routes/view/user')
 const userApiRouter = require('./routes/api/user')
+const blogViewRouter = require('./routes/view/bolg')
 const errorViewRouter = require('./routes/view/error')
 
 // error handler
@@ -67,10 +67,10 @@ app.use(session({
 // })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
 app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods())
+app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())   // 404 路由注册到最下面
 
 // error-handling
