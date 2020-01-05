@@ -1,0 +1,58 @@
+<% blogList.forEach(blog => { %>
+<div class="item-wrapper" style="position: relative;">
+  <img class="user-picture" src="<%= blog.user.picture %>" alt="" style="width: 80px; height: 80px; border-radius: 50%;">
+  <div class="content clear-fix">
+    <% if(blog.image) { %>
+    <a href="<%= blog.image %>" target="_blank">
+      <img src="<%= blog.image %>" alt="" style="position: absolute; top: 0; right: 0; width: 100px; height: 100px;">
+    </a>
+    <% } %>
+    <a href="/profile/<%= blog.user.userName %>">
+      <%= blog.user.nickName %>
+    </a>:
+    <span><%= blog.content %></span>
+  </div>
+
+  <div class="info">
+    <span><%= blog.createAtFormat %></span>
+    &nbsp;
+    <% if(locals.canReply) { %>
+    <a href="#" class="blog-list-reply" data-content="<%= blog.content %>" data-userName="<%= blog.user.userName %>"
+      data-nickName="<%= blog.user.nickName %>">
+      <i class="fa fa-mail-reply">回复</i>
+    </a>
+    <% } %>
+  </div>
+</div>
+<% }) %>
+
+<script>
+  $(function () {
+    // 设置焦点
+    function setCursor(el, st, end) {
+      if (el.setSelectionRange) {
+        el.focus()
+        el.setSelectionRange(st, end)
+      } else if(el.createTextRange) {
+        var range = el.createTextRange()
+        range.collapse(true)
+        range.moveEnd('charater', end)
+        range.moveStart('charater', st)
+        range.select()
+      }
+    }
+
+    // 回复
+    var $textContent = $('#text-content')
+    $('.blog-list-reply').click(function(e) {
+      e.preventDefault()
+      var $target = $(e.target)
+      // 获取内容和用户
+      var content = $target.attr('data-content')
+      var userName = $target.attr('data-userName')
+      var nickName = $target.attr('data-nickName')
+      // 设置内容并获取焦点
+      // $textContent.val(' // @' + nickName + '-' + userName + )
+    })
+  })
+</script>

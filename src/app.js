@@ -19,6 +19,7 @@ const userViewRouter = require('./routes/view/user')
 const userApiRouter = require('./routes/api/user')
 const blogViewRouter = require('./routes/view/bolg')
 const blogHomeApiRouter = require('./routes/api/blog-home')
+const profileApiRouter = require('./routes/api/blog-profile')
 const errorViewRouter = require('./routes/view/error')
 
 // error handler
@@ -73,6 +74,7 @@ app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods())
 app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 app.use(blogHomeApiRouter.routes(), blogHomeApiRouter.allowedMethods())
+app.use(profileApiRouter.routes(), profileApiRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())   // 404 路由注册到最下面
 
 // error-handling

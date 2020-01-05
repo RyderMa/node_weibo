@@ -1,0 +1,50 @@
+<!-- 引入头部组件 -->
+<%- include('layout/header', { title: '微博-首页', isNav: true, list: true, isInputBlog: true }) %>
+
+<div class="container" style="margin-top: 20px;">
+  <div class="row">
+    <!-- 左侧 -->
+    <div class="col-8">
+      <h4 style="margin: 20px auto; border-bottom: 1px solid #eee;">个人空间</h4>
+      
+      <% if(blogData.isEmpty) { %>
+      <div>
+        <center>暂无数据</center>
+        <h4><%= userData.isMe%></h4>
+      </div>
+      <% } else { %>
+        <!-- 微博列表 -->
+        <div id="container-weibo-list" class="weibo-list">
+          <%- include('widgets/blog-list', {
+              blogList: blogData.blogList
+            }) %>
+        </div>
+        <!-- 加载更多 -->
+        <% if(blogData.count > blogData.blogList.length) { %>
+          <%- include('widgets/load-more', {
+              pageSize: blogData.pageSize,
+              pageIndex: blogData.pageIndex,
+              count: blogData.count,
+              containerSelector: '#container-weibo-list',
+              api: '/api/profile/loadMore/' + userData.userInfo.userName
+            }) %>
+        <% } %>
+      <% } %>
+    </div>
+    <!-- 右侧 -->
+    <div class="col-4">
+      <!-- 个人信息 -->
+      <div class="right-item">
+        <%- include('widgets/user-info', {
+          userInfo: userData.userInfo,
+          isMe: userData.isMe,
+          amIFollowed: userData.amIFollowed,
+          atCount: userData.atCount
+        }) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 引入底部组件 -->
+<%- include('layout/footer') %>

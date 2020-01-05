@@ -1,0 +1,38 @@
+<div style="margin-top: 20px;">
+  <div id="btn-load-more" type="button" class="btn btn-sm btn-primary" style="margin-bottom: 20px;">加载更多~</div>
+</div>
+
+<script>
+  var PAGE_SIZE = <%= pageSize %>
+  var PAGE_INDEX = <%= pageIndex %>
+  var COUNT = <%= count %>
+  var $btnLoadMore = $('#btn-load-more')
+  var $containerWeiboList = $('<%= containerSelector %>')
+  var api = '<%= api %>'
+
+  // 加载更多
+  $btnLoadMore.click(function () {
+    var nextPageIndex = PAGE_INDEX + 1
+    ajax.get(api + '/' + nextPageIndex, function (err, data) {
+      if (err) {
+        alert(err)
+        return
+      }
+      // 更新当前页
+      PAGE_INDEX = data.pageIndex
+      // 是否要隐藏 加载更多
+      if ((PAGE_INDEX + 1) * PAGE_SIZE >= COUNT) {
+        $btnLoadMore.hide()
+      }
+      // 渲染新数据
+      var $tempContainer = $(data.blogListTpl)
+      $tempContainer.each(function (index, item) {
+        if(item.nodeType !== 1) {
+          // 非 DOM 元素
+          return
+        }
+        $containerWeiboList.append($(item))
+      })
+    })
+  })
+</script>
