@@ -26,6 +26,7 @@ async function getProfileBlogList(userName, pageIndex = 0) {
     pageIndex,
     count: result.count 
   })
+
 }
 
 module.exports = {

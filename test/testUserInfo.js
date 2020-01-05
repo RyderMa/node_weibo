@@ -8,5 +8,6 @@
  * 每次重新登录，都要重新获取
  */
 module.exports = {
-  COOKIE: 'weibo.sid=3MNs8JBSO_NIUaiDGW8Vu-lWC-r6KrUh; weibo.sid.sig=BOZhR2tzIzdQB1cAkR3ZCb3lq3I'
+  USERNAME: 'lisi',
+  COOKIE: 'weibo.sid=n_SB98rgc5AgWV2J20ol-eKqJlot_DfT; weibo.sid.sig=eEVTviKlA4PKG4NU1aVp45UnZhQ'
 }
