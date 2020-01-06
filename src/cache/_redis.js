@@ -45,7 +45,7 @@ function get(key) {
  * @param {*} val 
  * @param {number} timeout 过期时间单位 s
  */
-function set(key, val, timeout = 60 * 60) {
+function set(key, val, timeout = 5 * 60) {
   if(typeof val == 'object') {
     val = JSON.stringify(val)
   }
