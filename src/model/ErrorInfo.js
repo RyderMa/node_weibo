@@ -55,12 +55,12 @@ module.exports = {
     message: '删除用户失败'
   },
   // 添加关注失败
-  addFllowerFailInfo: {
+  addFollowerFailInfo: {
     errno: 10011,
     message: '添加关注失败'
   },
   // 取消关注失败
-  deleteFllowerFailInfo: {
+  deleteFollowerFailInfo: {
     errno: 10012,
     message: '取消关注失败'
   },

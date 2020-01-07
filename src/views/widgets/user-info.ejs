@@ -1,5 +1,6 @@
 <div class="user-info clear-fix" style="display: flex; align-items: center;">
-  <img src="<%= userInfo.picture %>" class="avatar float-left" alt="" style="width: 80px; height: 80px; border-radius: 50%;">
+  <img src="<%= userInfo.picture %>" class="avatar float-left" alt=""
+    style="width: 80px; height: 80px; border-radius: 50%;">
   <h4 class="user-name"><%= userInfo.nickName %></h4>
 </div>
 
@@ -11,7 +12,8 @@
 </div>
 <% } else { %>
 <div style="margin-top: 10px;">
-  <button>关注/取消关注</button>
+  <button id="btn-follow" class="btn btn-primary" style="display: none">关注</button>
+  <button id="btn-un-follow" class="btn btn-danger" style="display: none">取消关注</button>
 </div>
 <% } %>
 
@@ -23,30 +25,45 @@
     // 按钮显示与隐藏
     var $btnFollow = $('#btn-follow')
     var $btnUnFollow = $('#btn-un-follow')
-    // if (<%= !isMe %>) {
-    //   if (<%= locals.amIFollowed %>) {
-    //     $btnFollow.show()
-    //   } else {
-    //     $btnUnFollow.show()
-    //   }
-    // }
+    if (<%= !isMe %>) {
+    if (<%= !locals.amIFollowed %>) {
+      $btnFollow.show()
+    } else {
+      $btnUnFollow.show()
+    }
+  }
 
-    // 取消关注
-    $btnUnFollow.click(function() {
-      if(confirm('确定取消关注吗？') === false) {
+  // 点击关注
+  $btnFollow.click(function () {
+    ajax.post('/api/profile/follow', {
+      userId: curUserId
+    }, function (err, data) {
+      if(err) {
+        alert(err)
         return
       }
-      ajax.post('/api/profile/unFollow', {
-          userId: curUserId
-        }, function(err) {
-          if(err) {
-            alert(err)
-            return
-          }
-          // 取消成功
-          $btnFollow.show()
-          $btnUnFollow.hide()
-      })
+
+      $btnFollow.hide()
+      $btnUnFollow.show()
     })
+  })
+
+  // 取消关注
+  $btnUnFollow.click(function () {
+    if (confirm('确定取消关注吗？') === false) {
+      return
+    }
+    ajax.post('/api/profile/unFollow', {
+      userId: curUserId
+    }, function (err) {
+      if (err) {
+        alert(err)
+        return
+      }
+      // 取消成功
+      $btnFollow.show()
+      $btnUnFollow.hide()
+    })
+  })
   })
 </script>

@@ -51,6 +51,12 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
   const fansResult = await getFans(curUserInfo.id)
   const { count: fansCount, userList: fansList } = fansResult.data
 
+  // 我是否关注了当前用户
+  const amIFollowed = fansList.some(user => {
+    return user.userName == myUserName
+  })
+  console.log('是否关注了', amIFollowed)
+
   await ctx.render('profile.ejs', {
     blogData: {
       isEmpty,
@@ -62,6 +68,7 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     userData: {
       isMe,
       userInfo: curUserInfo,
+      amIFollowed,
       fansData: {
         count: fansCount,
         list: fansList
