@@ -10,7 +10,6 @@
       <% if(blogData.isEmpty) { %>
       <div>
         <center>暂无数据</center>
-        <h4><%= userData.isMe%></h4>
       </div>
       <% } else { %>
         <!-- 微博列表 -->
@@ -34,14 +33,20 @@
     <!-- 右侧 -->
     <div class="col-4">
       <!-- 个人信息 -->
-      <div class="right-item">
+      <div class="right-item" style="border-bottom: 1px solid #eee;">
         <%- include('widgets/user-info', {
           userInfo: userData.userInfo,
           isMe: userData.isMe,
-          amIFollowed: userData.amIFollowed,
-          atCount: userData.atCount
+          <!-- amIFollowed: userData.amIFollowed, -->
+          <!-- atCount: userData.atCount -->
         }) %>
       </div>
+
+      <!-- 粉丝内容 -->
+      <%- include('widgets/fans', {
+        count: userData.fansData.count,
+        userList: userData.fansData.list
+      }) %>
     </div>
   </div>
 </div>
