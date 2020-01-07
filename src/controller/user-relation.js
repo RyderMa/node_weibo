@@ -5,7 +5,7 @@
 
 const { addFollowerFailInfo, deleteFollowerFailInfo } = require('../model/ErrorInfo')
 const { FailModel, SuccessModel } = require('../model/ResModel')
-const { getUserByFollower } = require('../services/user-relation')
+const { getUserByFollower, getFollwersByUser } = require('../services/user-relation')
 const { addFollower, deleteFollower } = require('../services/user-relation')
 
 /**
@@ -14,6 +14,18 @@ const { addFollower, deleteFollower } = require('../services/user-relation')
  */
 async function getFans(userId) {
   const { count, userList } = await getUserByFollower(userId)
+  return new SuccessModel({
+    count,
+    userList
+  })
+}
+
+/**
+ * 获取已关注列表
+ * @param {number} userId 用户ID
+ */
+async function getFollowers(userId) {
+  const { count, userList } = await getFollwersByUser(userId)
   return new SuccessModel({
     count,
     userList
@@ -42,7 +54,7 @@ async function follow(myUserId, curUserId) {
  */
 async function unFollow(myUserId, curUserId) {
   const result = await deleteFollower(myUserId, curUserId)
-  if(result) {
+  if (result) {
     // 取消成功
     return new SuccessModel()
   }
@@ -52,6 +64,7 @@ async function unFollow(myUserId, curUserId) {
 
 module.exports = {
   getFans,
+  getFollowers,
   follow,
   unFollow
 }

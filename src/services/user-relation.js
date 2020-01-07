@@ -26,7 +26,37 @@ async function getUserByFollower(followerId) {
     ]
   })
   console.log('user-relation查出的结果', result)
-  let userList = result.rows.map(row => row.dataValues)
+  let userList = result.rows.map(row => formatUser(row.dataValues))
+  return {
+    count: result.count,
+    userList
+  }
+}
+
+/**
+ * 获取用户已关注列表
+ * @param {number} userId 用户 ID
+ */
+async function getFollwersByUser(userId) {
+  const result = await UserRelation.findAndCountAll({
+    order: [
+      ['id', 'desc']
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'userName', 'nickName', 'picture']
+      }
+    ],
+    where: {
+      userId
+    }
+  })
+  let userList = result.rows.map(row => {
+    row.dataValues.user = formatUser(row.dataValues.user.dataValues)
+    // 仅返回用户数据
+    return row.dataValues.user
+  })
   return {
     count: result.count,
     userList
@@ -63,6 +93,7 @@ async function deleteFollower(userId, followerId) {
 
 module.exports = {
   getUserByFollower,
+  getFollwersByUser,
   addFollower,
   deleteFollower
 }

@@ -34,4 +34,5 @@ router.post('/unFollow', loginCheck, async (ctx, next) => {
   let { userId: curUserId } = ctx.request.body
   ctx.body = await unFollow(myUserId, curUserId)
 })
+
 module.exports = router

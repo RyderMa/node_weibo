@@ -42,10 +42,16 @@
         }) %>
       </div>
 
-      <!-- 粉丝内容 -->
+      <!-- 粉丝列表 -->
       <%- include('widgets/fans', {
         count: userData.fansData.count,
         userList: userData.fansData.list
+      }) %>
+
+      <!-- 关注人列表 -->
+      <%- include('widgets/followers', {
+        count: userData.followersData.count,
+        userList: userData.followersData.list
       }) %>
     </div>
   </div>
