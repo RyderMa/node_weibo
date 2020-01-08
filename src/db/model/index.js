@@ -20,6 +20,12 @@ User.hasMany(UserRelation, {
   foreignKey: 'userId'
 })
 
+// 微博表和用户关系表外键关系，库中不会显示此关系，但实际已关联
+Blog.belongsTo(UserRelation, {
+  foreignKey: 'userId',
+  targetKey: 'followerId'
+})
+
 module.exports = {
   User,
   Blog,
