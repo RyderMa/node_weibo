@@ -4,7 +4,6 @@
  */
 
 const server = require('../server')
-// const { COOKIE } = require('../testUserInfo')
 
 test('微博广场页数据获取，成功', async () => {
   const res = await server

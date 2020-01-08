@@ -4,12 +4,12 @@
  */
 
 const server = require('../server')
-const { COOKIE, USERNAME } = require('../testUserInfo')
+const { z_COOKIE, z_USERNAME } = require('../testUserInfo')
 
 test('个人主页微博数据获取，成功', async () => {
   const res = await server
-    .get(`/api/profile/loadMore/${USERNAME}/0`)
-    .set('cookie', COOKIE)
+    .get(`/api/profile/loadMore/${z_USERNAME}/0`)
+    .set('cookie', z_COOKIE)
   expect(res.body.errno).toBe(0)
 
   const data = res.body.data
