@@ -69,7 +69,13 @@
       $inputImgUrl.val('')
       // 刷新页面
       location.href = location.pathname
-    }
-    )
+    })
+  })
+
+  // @ 功能实现
+  $textContent.atwho({
+    at: '@',
+    // data: ['Anne', 'Tom']
+    data: '/api/user/getAtList'
   })
 </script>

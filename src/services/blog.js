@@ -4,7 +4,7 @@
  */
 
 const { Blog, User, UserRelation } = require('../db/model/index')
-const { formatUser } = require('./_format')
+const { formatUser, formatBlog } = require('./_format')
 
 /**
  * 创建一条微博数据
@@ -48,7 +48,7 @@ async function getBlogListByUser({ userName, pageIndex = 0, pageSize = 10 }) {
   // findAndCountAll 的 result.count 为数据总数 result.rows 为数组形式的查询结果
   let blogList = result.rows.map(row => {
     row.dataValues.user = formatUser(row.dataValues.user.dataValues)
-    return row.dataValues
+    return formatBlog(row.dataValues)
   })
 
   return {
@@ -83,7 +83,7 @@ async function getFollowersBlogList({ userId, pageIndex = 0, pageSize = 10 }) {
 
   let blogList = result.rows.map(row => {
     row.dataValues.user = formatUser(row.dataValues.user.dataValues)
-    return row.dataValues
+    return formatBlog(row.dataValues)
   })
 
   return {

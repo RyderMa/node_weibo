@@ -6,6 +6,7 @@
 const router = require('koa-router')()
 const { isTest } = require('../../utils/env')
 const { isExist, register, login, logout, changeInfo, deleteCurUser, changePassword } = require('../../controller/user')
+const { getFollowers } = require('../../controller/user-relation')
 // 用户信息校验规则
 const userValidate = require('../../validator/user')
 // 登录验证中间件
@@ -37,7 +38,7 @@ router.post('/login', async (ctx, next) => {
 })
 
 // 退出登录
-router.post('/logout', loginCheck, async(ctx, next) => {
+router.post('/logout', loginCheck, async (ctx, next) => {
   ctx.body = await logout(ctx)
 })
 
@@ -64,6 +65,15 @@ router.patch('/changePassword', loginCheck, genValidator(userValidate), async (c
   const { userName } = ctx.session.userInfo
   // controller
   ctx.body = await changePassword({ userName, password, newPassword })
+})
+
+// 获取at人列表
+router.get('/getAtList', loginCheck, async (ctx, next) => {
+  const { id: userId } = ctx.session.userInfo
+  const result = await getFollowers(userId)
+  let { userList } = result.data
+  userList = userList.map(user => `${user.nickName} - ${user.userName}`)
+  ctx.body = userList
 })
 
 module.exports = router
