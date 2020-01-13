@@ -6,20 +6,47 @@
 const router = require('koa-router')()
 const { loginRedirect } = require('../../middlewares/loginChecks')
 const { isExist } = require('../../controller/user')
+const { getHomeBolgList } = require('../../controller/blog-home')
 const { getProfileBlogList } = require('../../controller/blog-profile')
 const { getSquareBlogList } = require('../../controller/blog-square')
 const { getFans, getFollowers } = require('../../controller/user-relation')
 
 // 首页
 router.get('/', loginRedirect, async (ctx, next) => {
-  await ctx.render('index.ejs', {})
+  const userInfo = ctx.session.userInfo
+  const { id: userId } = userInfo
+
+  // 获取第一页数据，包含自己的微博和关注人的微博
+  const homeBlogResult = await getHomeBolgList(userId)
+  // 获取粉丝列表
+  const fansResult = await getFans(userId)
+  const { count: fansCount, userList: fansList } = fansResult.data
+
+  // 获取已关注列表
+  const followersResult = await getFollowers(userId)
+  const { count: followersCount, userList: followersList } = followersResult.data
+
+  await ctx.render('index.ejs', {
+    blogData: homeBlogResult.data,
+    userData: {
+      userInfo,
+      fansData: {
+        count: fansCount,
+        list: fansList
+      },
+      followersData: {
+        count: followersCount,
+        list: followersList
+      }
+    }
+  })
 })
 
 // 个人主页微博列表
 router.get('/profile', loginRedirect, async (ctx, next) => {
   // 当前用户个人主页
   const { userName } = ctx.session.userInfo
-  console.log('用户名', userName)
+  // console.log('用户名', userName)
   ctx.redirect(`/profile/${userName}`)
 })
 

@@ -3,7 +3,7 @@
  * @async malujie
  */
 
-const { Blog, User } = require('../db/model/index')
+const { Blog, User, UserRelation } = require('../db/model/index')
 const { formatUser } = require('./_format')
 
 /**
@@ -21,7 +21,7 @@ async function createBlog({ userId, content, image }) {
 
 /**
  * 根据用户获取微博列表
- * @param {Object} param0 
+ * @param {Object} param0
  */
 async function getBlogListByUser({ userName, pageIndex = 0, pageSize = 10 }) {
   // 拼接查询条件
@@ -57,7 +57,43 @@ async function getBlogListByUser({ userName, pageIndex = 0, pageSize = 10 }) {
   }
 }
 
+/**
+ * 获取已关注人微博列表
+ * @param {Object} param0
+ */
+async function getFollowersBlogList({ userId, pageIndex = 0, pageSize = 10 }) {
+  const result = await Blog.findAndCountAll({
+    limit: pageSize,
+    offset: pageSize * pageIndex,
+    order: [
+      ['id', 'desc']
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ['userName', 'nickName', 'picture'],
+      },
+      {
+        model: UserRelation,
+        attributes: ['userId', 'followerId'],
+        where: { userId }
+      }
+    ]
+  })
+
+  let blogList = result.rows.map(row => {
+    row.dataValues.user = formatUser(row.dataValues.user.dataValues)
+    return row.dataValues
+  })
+
+  return {
+    count: result.count,
+    blogList
+  }
+}
+
 module.exports = {
   createBlog,
-  getBlogListByUser
+  getBlogListByUser,
+  getFollowersBlogList
 }
