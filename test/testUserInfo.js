@@ -10,8 +10,8 @@
 module.exports = {
   z_id: 1,
   z_USERNAME: 'lisi',
-  z_COOKIE: 'weibo.sid=-E7jFRd9vjOZ__2P57pxgANzTFv891jU; weibo.sid.sig=oI606gla4pK25Slzn-gLh9PFERY',
+  z_COOKIE: 'weibo.sid=jSfWnBvMT0Fz1RBMjukOW_a79xh9iMub; weibo.sid.sig=wg4QOpGADZHM8cucuupQ-wtM-v4',
   m_id: 2,
   m_USERNAME: 'malujie',
-  m_COOKIE: 'weibo.sid=h7RF5M0SfYweiYLc8Ug8QWQuf4UJwmKM; weibo.sid.sig=qSdr_6Kyf6D9ZccevI4imHVZgYg'
+  m_COOKIE: 'weibo.sid=oTpzNDIB1p7dmq3Midu53jqPOU3H5OIl; weibo.sid.sig=uFvIytyH2VyRsRfwgmisorRFTts'
 }
