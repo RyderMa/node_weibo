@@ -45,6 +45,19 @@ test('获取已关注列表', async () => {
   expect(existM).toBe(true)
 })
 
+// 获取可 at 用户列表
+test('获取at列表', async () => {
+  const res = await server
+    .get('/api/user/getAtList')
+    .set('cookie', m_COOKIE)
+  const atList = res.body
+  console.log('at列表', atList)
+  const hasUserName = atList.some(item => {
+    return item.indexOf(`- ${z_USERNAME}`) >= 0
+  })
+  expect(hasUserName).toBe(true)
+})
+
 // z 取消关注 m
 test('取消关注应该成功', async () => {
   const res = await server

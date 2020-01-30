@@ -21,7 +21,7 @@ function _formatUserPicture(obj) {
  * @param {string} time
  */
 function timeFormat(time) {
-  return time
+  return `${new Date(time).toLocaleDateString()} ${new Date(time).toTimeString().slice(0, 8)}`
 }
 
 /**
